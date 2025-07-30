@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/ModbusFramework.dir/src/main.cpp.o CMakeFiles/ModbusFramework.dir/src/ChannelSerial.cpp.o CMakeFiles/ModbusFramework.dir/src/ChannelTcpServer.cpp.o CMakeFiles/ModbusFramework.dir/src/ChannelTcpClient.cpp.o CMakeFiles/ModbusFramework.dir/src/DriverModbus.cpp.o -o ModbusFramework  -lpthread 

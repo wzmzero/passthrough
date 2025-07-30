@@ -1,0 +1,7 @@
+/home/wzm/passthrough_demo/test_boost/build/CMakeFiles/modbus-asio-example.dir
+/home/wzm/passthrough_demo/test_boost/build/CMakeFiles/edit_cache.dir
+/home/wzm/passthrough_demo/test_boost/build/CMakeFiles/rebuild_cache.dir
+/home/wzm/passthrough_demo/test_boost/build/CMakeFiles/list_install_components.dir
+/home/wzm/passthrough_demo/test_boost/build/CMakeFiles/install.dir
+/home/wzm/passthrough_demo/test_boost/build/CMakeFiles/install/local.dir
+/home/wzm/passthrough_demo/test_boost/build/CMakeFiles/install/strip.dir

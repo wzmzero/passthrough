@@ -1,0 +1,42 @@
+{
+  "channels": [
+    {
+      "name": "TCP_Server_to_TCP_Client",
+      "input": {
+        "type": "tcp_server",
+        "listen_port": 8002
+      },
+      "output": {
+        "type": "udp_client",
+        "server_ip": "127.0.0.1",
+        "server_port": 8001
+      }
+    },
+        {
+      "name": "UDP_Server_to_tcp_client",
+      "input": {
+        "type": "udp_server",
+        "listen_port": 8003
+      },
+      "output": {
+        "type": "tcp_client",
+        "server_ip": "127.0.0.1",
+        "server_port": 8001
+      }
+    },
+    {
+      "name": "Serial_to_UDP_Server",
+      "input": {
+        "type": "serial",
+        "port": "/dev/ttyS0",
+        "baud_rate": 9600
+      },
+      "output": {
+        "type": "tcp_client",
+        "server_ip": "127.0.0.1",
+        "server_port": 8001
+      }
+    }
+    
+  ]
+}

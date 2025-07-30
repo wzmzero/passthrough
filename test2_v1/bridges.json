@@ -1,0 +1,43 @@
+
+{
+    "bridges": [
+        {
+            "id": 1,
+            "channel1": {
+                "type": "tcp_server",
+                "host": "0.0.0.0",
+                "port": 8080
+            },
+            "channel2": {
+                "type": "tcp_server",
+                "host": "127.0.0.1",
+                "port": 9090
+            }
+        },
+        {
+            "id": 2,
+            "channel1": {
+                "type": "serial",
+                "device": "/dev/ttyS0",
+                "baud_rate": 115200
+            },
+            "channel2": {
+                "type": "tcp_server",
+                "host": "172.16.24.128",
+                "port": 5000
+            }
+        },
+        {
+            "id": 3,
+            "channel1": {
+                "type": "udp_server",
+                "port": 12345
+            },
+            "channel2": {
+                "type": "udp_client",
+                "host": "172.16.24.128",
+                "port": 54321
+            }
+        }
+    ]
+}

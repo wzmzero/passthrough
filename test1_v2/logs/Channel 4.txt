@@ -1,0 +1,128 @@
+﻿2025-07-18 15:24:07.043 [INFO ] [Channel 4] Creating channel Channel 4
+2025-07-18 15:24:07.043 [INFO ] [Channel 4] Input: udp_client, Output: tcp_server
+2025-07-18 15:24:07.043 [INFO ] [Channel 4] [NODE1] UDP client connected to 172.16.24.69:8080
+2025-07-18 15:24:07.043 [INFO ] [Channel 4] ---------------Channel started---------------
+2025-07-18 15:24:46.155 [INFO ] [Channel 4] [NODE2] New client connected: 172.16.24.129:57560
+2025-07-18 15:25:26.529 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-07-18 15:25:26.549 [INFO ] [Channel 4] Channel stopped
+2025-07-18 15:25:26.631 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-07-18 15:25:26.632 [INFO ] [Channel 4] Channel stopped
+2025-07-18 15:25:26.632 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-07-18 15:25:27.351 [INFO ] [Channel 4] Creating channel Channel 4
+2025-07-18 15:25:27.351 [INFO ] [Channel 4] Input: udp_client, Output: tcp_server
+2025-07-18 15:25:27.351 [INFO ] [Channel 4] [NODE1] UDP client connected to 172.16.24.69:8080
+2025-07-18 15:25:27.352 [INFO ] [Channel 4] ---------------Channel started---------------
+2025-07-18 15:25:31.582 [INFO ] [Channel 4] [NODE2] New client connected: 172.16.24.129:49030
+2025-07-18 15:25:36.773 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-07-18 15:25:36.795 [INFO ] [Channel 4] Channel stopped
+2025-07-18 15:25:36.876 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-07-18 15:25:36.876 [INFO ] [Channel 4] Channel stopped
+2025-07-18 15:25:36.877 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-07-18 15:25:40.488 [INFO ] [Channel 4] Creating channel Channel 4
+2025-07-18 15:25:40.488 [INFO ] [Channel 4] Input: udp_client, Output: tcp_server
+2025-07-18 15:25:40.488 [INFO ] [Channel 4] [NODE1] UDP client connected to 172.16.24.69:8080
+2025-07-18 15:25:40.489 [INFO ] [Channel 4] ---------------Channel started---------------
+2025-07-18 15:25:41.827 [INFO ] [Channel 4] [NODE2] New client connected: 172.16.24.129:57248
+2025-07-18 15:25:54.864 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:25:54.864 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:25:56.853 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:25:56.853 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:25:58.858 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:25:58.858 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:00.861 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:00.861 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:02.850 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:02.850 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:04.875 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:04.875 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:06.857 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:06.857 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:08.851 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:08.851 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:10.860 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:10.860 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:12.861 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:12.861 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:14.865 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:14.865 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:16.855 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:16.855 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:18.932 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:18.932 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:20.892 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:20.892 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:22.922 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:22.922 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:24.855 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:24.855 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:26.849 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:26.849 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:28.858 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:28.858 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:30.851 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:30.851 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:32.854 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:32.854 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:34.852 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:34.852 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:36.863 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:36.864 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:38.854 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:38.854 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:40.851 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:40.851 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:43.256 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:43.256 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:45.259 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:45.259 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:46.858 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:46.858 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:48.854 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:48.854 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:50.864 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:50.864 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:52.853 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:52.853 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:54.854 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:54.854 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:56.862 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:56.863 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:26:58.889 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:26:58.889 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:00.868 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:00.868 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:02.865 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:02.866 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:04.855 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:04.856 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:06.848 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:06.848 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:08.853 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:08.853 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:10.862 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:10.862 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:12.848 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:12.848 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:14.852 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:14.852 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:16.855 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:16.855 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:18.854 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:18.855 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:20.887 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:20.887 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:22.850 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:22.850 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:24.850 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:24.850 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:26.849 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:26.849 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:28.865 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:28.865 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:30.890 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:30.890 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:33.357 [NODE2 RECV]3 bytes: 64 64 64
+2025-07-18 15:27:33.357 [INFO ] [Channel 4] [NODE2->NODE1] 3 bytes: ddd
+2025-07-18 15:27:34.235 [INFO ] [Channel 4] [NODE2] Client disconnected: 172.16.24.129:57248
+2025-07-18 15:27:46.154 [INFO ] [Channel 4] [NODE2] New client connected: 172.16.24.129:57120
+2025-07-18 15:28:41.637 [INFO ] [Channel 4] [NODE2] Client disconnected: 172.16.24.129:57120

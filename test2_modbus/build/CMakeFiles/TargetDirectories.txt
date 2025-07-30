@@ -1,0 +1,3 @@
+/home/wzm/passthrough_demo/test2_modbus/build/CMakeFiles/ModbusFramework.dir
+/home/wzm/passthrough_demo/test2_modbus/build/CMakeFiles/edit_cache.dir
+/home/wzm/passthrough_demo/test2_modbus/build/CMakeFiles/rebuild_cache.dir

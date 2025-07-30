@@ -1,0 +1,24 @@
+﻿2025-07-18 15:24:07.037 [INFO ] Added channel: Channel 1
+2025-07-18 15:24:07.039 [INFO ] Added channel: Channel 2
+2025-07-18 15:24:07.041 [INFO ] Added channel: Channel 3
+2025-07-18 15:24:07.043 [INFO ] Added channel: Channel 4
+2025-07-18 15:24:07.045 [INFO ] Added channel: Channel 5
+2025-07-18 15:24:07.045 [INFO ] Starting protocol converter...
+2025-07-18 15:25:25.270 [WARN ] Received Ctrl+C Signal, Shutting down...
+2025-07-18 15:25:26.088 [INFO ] Stopping all channels...
+2025-07-18 15:25:26.633 [INFO ] All channels stopped
+2025-07-18 15:25:27.347 [INFO ] Added channel: Channel 1
+2025-07-18 15:25:27.348 [INFO ] Added channel: Channel 2
+2025-07-18 15:25:27.350 [INFO ] Added channel: Channel 3
+2025-07-18 15:25:27.352 [INFO ] Added channel: Channel 4
+2025-07-18 15:25:27.353 [INFO ] Added channel: Channel 5
+2025-07-18 15:25:27.353 [INFO ] Starting protocol converter...
+2025-07-18 15:25:35.563 [WARN ] Received Ctrl+C Signal, Shutting down...
+2025-07-18 15:25:36.358 [INFO ] Stopping all channels...
+2025-07-18 15:25:36.877 [INFO ] All channels stopped
+2025-07-18 15:25:40.483 [INFO ] Added channel: Channel 1
+2025-07-18 15:25:40.485 [INFO ] Added channel: Channel 2
+2025-07-18 15:25:40.487 [INFO ] Added channel: Channel 3
+2025-07-18 15:25:40.489 [INFO ] Added channel: Channel 4
+2025-07-18 15:25:40.498 [INFO ] Added channel: Channel 5
+2025-07-18 15:25:40.498 [INFO ] Starting protocol converter...

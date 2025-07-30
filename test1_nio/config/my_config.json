@@ -1,0 +1,28 @@
+{
+  "channels": [
+    {
+      "name": "Channel1",
+      "input": {
+        "type": "tcp_server",
+        "port": 8002
+      },
+      "output": {
+        "type": "tcp_client",
+        "ip": "172.16.24.220",
+        "port": 8080
+      }
+    },
+    {
+      "name": "Channel 2",
+      "input": {
+        "type": "tcp_server",
+        "port": 8003
+      },
+      "output": {
+        "type": "serial",
+        "serial_port": "/dev/ttyS0",
+        "baud_rate": 9600
+      }
+    }
+  ]
+}

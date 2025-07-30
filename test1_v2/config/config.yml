@@ -1,0 +1,46 @@
+channels:
+
+  - name: "Channel 1"
+    input:
+      type: "tcp_client"
+      ip: "172.16.24.69"
+      port: 8001
+    output:
+      type: "udp_server"
+      port: 8080
+
+  - name: "Channel 2"
+    input:
+      type: "udp_server"
+      port: 8081
+    output:
+      type: "tcp_client"
+      ip: "172.16.24.129"
+      port: 600
+
+  - name: "Channel 3"
+    input:
+      type: "tcp_server"
+      port: 8070
+    output:
+      type: "udp_server"
+      port: 8082
+  
+  - name: "Channel 4"
+    input:
+      type: "udp_client"
+      ip: "172.16.24.69"
+      port: 8080
+    output:
+      type: "tcp_server"
+      port: 8071
+  
+  - name: "Channel 5"
+    input:
+      type: "tcp_server"
+      port: 8072
+    output:
+      type: "udp_client"
+      ip: "172.16.24.129"
+      port: 500
+

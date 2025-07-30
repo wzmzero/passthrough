@@ -33,5 +33,5 @@ private:
     boost::asio::ip::tcp::socket m_socket;
     boost::asio::ip::tcp::resolver m_resolver;
     boost::asio::steady_timer m_reconnectTimer;
-    std::array<char, 1024> m_recvBuffer;
+
 };

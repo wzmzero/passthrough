@@ -24,5 +24,5 @@ private:
     std::string m_device;
     unsigned int m_baudRate;
     bool m_isRunning = false;
-    std::array<char, 1024> m_recvBuffer;
+ 
 };

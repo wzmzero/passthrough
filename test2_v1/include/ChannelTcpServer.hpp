@@ -36,7 +36,7 @@ public:
     void start() override;
     void stop() override;
     void send(const std::string& data) override;
-    bool isRunning() const override { return m_isRunning; }   
+    bool isRunning() const override { return m_isRunning; }  // 实现纯虚函数
     
     void removeSession(Session* session);
 

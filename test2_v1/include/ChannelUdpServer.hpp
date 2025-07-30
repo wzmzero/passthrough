@@ -24,5 +24,5 @@ private:
     bool m_isRunning = false;
     std::set<boost::asio::ip::udp::endpoint> m_clientEndpoints;
     std::mutex m_endpointsMutex;
-    std::array<char, 1024> m_recvBuffer;
+ 
 };

@@ -5,8 +5,7 @@
 // ------------------- Session Implementation -------------------
 Session::Session(boost::asio::io_context& io, ChannelTcpServer& server)
     : m_socket(std::make_shared<boost::asio::ip::tcp::socket>(io)),
-      m_server(server),
-      m_recvBuffer(1024) {}
+      m_server(server) {}
 
 void Session::start() {
     try {

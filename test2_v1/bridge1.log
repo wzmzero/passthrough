@@ -1,0 +1,21 @@
+[2025-07-31 14:53:50] [INFO] [CH1] New connection accepted, active sessions: 1
+[2025-07-31 14:54:01] [INFO] [CH1] New connection accepted, active sessions: 2
+[2025-07-31 14:54:02] [INFO] [CH1] Session removed, active sessions: 1
+[2025-07-31 14:54:03] [INFO] [CH1] New connection accepted, active sessions: 2
+[2025-07-31 14:54:04] [INFO] [CH1] Session removed, active sessions: 1
+[2025-07-31 14:54:06] [INFO] [CH1] New connection accepted, active sessions: 2
+[2025-07-31 14:54:07] [INFO] [CH1] Session removed, active sessions: 1
+[2025-07-31 14:54:07] [INFO] [CH1] New connection accepted, active sessions: 2
+[2025-07-31 14:54:08] [INFO] [CH1] Session removed, active sessions: 1
+[2025-07-31 14:54:12] [INFO] [CH1] New connection accepted, active sessions: 2
+[2025-07-31 14:54:13] [INFO] [CH1] Session removed, active sessions: 1
+[2025-07-31 14:54:14] [INFO] [CH1] New connection accepted, active sessions: 2
+[2025-07-31 14:54:15] [INFO] [CH1] Session removed, active sessions: 1
+[2025-07-31 14:54:16] [INFO] [CH1] New connection accepted, active sessions: 2
+[2025-07-31 14:54:39] [INFO] [CH1] New connection accepted, active sessions: 3
+[2025-07-31 14:55:36] [INFO] [CH1] TCP server stopped
+[2025-07-31 14:55:36] [INFO] [CH2] TCP server stopped
+[2025-07-31 14:55:40] [INFO] [CH1] TCP server stopped
+[2025-07-31 14:55:40] [INFO] [CH2] TCP server stopped
+[2025-07-31 14:55:58] [INFO] [CH1] New connection accepted, active sessions: 1
+[2025-07-31 14:55:59] [INFO] [CH2] New connection accepted, active sessions: 1

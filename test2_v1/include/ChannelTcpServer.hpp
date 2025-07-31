@@ -9,23 +9,25 @@
 // 前向声明
 class ChannelTcpServer;
 
-class Session : public std::enable_shared_from_this<Session> {
+class Session : public std::enable_shared_from_this<Session>,public ChannelBase {
 public:
     using SessionPtr = std::shared_ptr<Session>;
     using SessionSocketPtr = std::shared_ptr<boost::asio::ip::tcp::socket>;
-
+    void start() override ;
+    void stop() override ; 
+    void send(const std::string& data) override ; 
+    bool isRunning() const override { return m_isRunning; }   
     Session(boost::asio::io_context& io, ChannelTcpServer& server);
-    void start();
-    void send(const std::string& data);
+    ~Session() override;
     boost::asio::ip::tcp::socket& socket() { return *m_socket; }
 
 private:
     void startReceive();
     void handleReceive(const boost::system::error_code& ec, std::size_t bytes_transferred);
-
+    bool m_isRunning = false;
     SessionSocketPtr m_socket;
     ChannelTcpServer& m_server;
-    std::vector<char> m_recvBuffer;
+ 
 };
 
 class ChannelTcpServer : public ChannelBase {
@@ -36,8 +38,7 @@ public:
     void start() override;
     void stop() override;
     void send(const std::string& data) override;
-    bool isRunning() const override { return m_isRunning; }  // 实现纯虚函数
-    
+    bool isRunning() const override { return m_isRunning; }   
     void removeSession(Session* session);
 
 private:

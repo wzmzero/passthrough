@@ -4,19 +4,37 @@
 
 // ------------------- Session Implementation -------------------
 Session::Session(boost::asio::io_context& io, ChannelTcpServer& server)
-    : m_socket(std::make_shared<boost::asio::ip::tcp::socket>(io)),
-      m_server(server) {}
-
+    : ChannelBase(io), m_socket(std::make_shared<boost::asio::ip::tcp::socket>(io)),
+      m_server(server){}
+Session::~Session() {
+    stop();  
+}
 void Session::start() {
     try {
-        m_server.log(LogLevel::INFO, "Client connected: " + 
+        log(LogLevel::INFO, "Client connected: " + 
             m_socket->remote_endpoint().address().to_string());
         startReceive();
     } catch (const boost::system::system_error& e) {
-        m_server.log(LogLevel::ERROR, "Session error: " + std::string(e.what()));
+       log(LogLevel::ERROR, "Session error: " + std::string(e.what()));
     }
 }
+void Session::stop() {
+    if (!m_isRunning) return;
+    m_isRunning = false;
 
+    boost::system::error_code ec;
+    // 安全关闭套接字
+    if (m_socket->is_open()) {
+        m_socket->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+        if (ec && ec != boost::asio::error::not_connected) {
+            log(LogLevel::WARNING, "Socket shutdown warning: " + ec.message());
+        }
+        m_socket->close(ec);
+        if (ec) {
+            log(LogLevel::ERROR, "Socket close error: " + ec.message());
+        }
+    }
+}
 void Session::send(const std::string& data) {
     if (!m_socket->is_open()) return;
     
@@ -25,7 +43,7 @@ void Session::send(const std::string& data) {
     boost::asio::async_write(*m_socket, boost::asio::buffer(*buffer),
         [self, buffer](const boost::system::error_code& ec, std::size_t) {
             if (ec) {
-                self->m_server.log(LogLevel::ERROR, "Send failed: " + ec.message());
+                self->log(LogLevel::ERROR, "Send failed: " + ec.message());
             }
         });
 }
@@ -42,17 +60,16 @@ void Session::handleReceive(const boost::system::error_code& ec,
                             std::size_t bytes_transferred) {
     if (ec) {
         if (ec == boost::asio::error::eof) {
-            m_server.log(LogLevel::INFO, "Client disconnected");
+           log(LogLevel::INFO, "Client disconnected");
         } else if (ec != boost::asio::error::operation_aborted) {
-            m_server.log(LogLevel::ERROR, "Receive error: " + ec.message());
+            log(LogLevel::ERROR, "Receive error: " + ec.message());
         }
+        stop(); // 停止当前会话
         m_server.removeSession(this);
         return;
     }
-
-    if (bytes_transferred > 0) {
-        std::string data(m_recvBuffer.data(), bytes_transferred);
-        m_server.log(LogLevel::DEBUG, "Received: " + data);
+        if (receiveCallback) {
+            receiveCallback(std::string(m_recvBuffer.data(), bytes_transferred));
         startReceive();
     }
 }
@@ -71,7 +88,7 @@ void ChannelTcpServer::start() {
     if (m_isRunning) return;
     m_isRunning = true;
     startAccept();
-    log(LogLevel::INFO, "TCP server started (multi-session support)");
+    log(LogLevel::INFO, "TCP server started");
 }
 
 void ChannelTcpServer::stop() {

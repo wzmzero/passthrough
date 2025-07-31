@@ -1,19 +1,12 @@
-// include/ChannelBase.hpp
+//  
 #pragma once
 #include <boost/asio.hpp>
 #include <functional>
 #include <memory>
 #include <string>
-#include <iostream>
+#include "Common.h"
 
-enum class LogLevel
-{
-    ERROR,
-    WARNING,
-    INFO,
-    DEBUG
-};
-
+ 
 class ChannelBase {
 public:
     using ReceiveCallback = std::function<void(const std::string&)>;
@@ -30,23 +23,15 @@ public:
     void setLogCallback(LogCallback cb) {logCallback = std::move(cb);}
 
 protected:
+    // 日志记录函数
     void log(LogLevel level, const std::string &message) {
         if (logCallback) {
-            logCallback(level, message);
-        } else {
-            // 默认日志输出
-            if (level == LogLevel::ERROR) {
-                std::cerr << "\033[1;31m[ERROR] " << message << "\033[0m\n";
-            } else if (level == LogLevel::WARNING) {
-                std::cerr << "\033[1;33m[WARNING] " << message << "\033[0m\n";
-            } else if (level == LogLevel::INFO) {
-                std::cout << "\033[1;32m[INFO] " << message << "\033[0m\n";
-            } else {
-                std::cout << "[LOG] " << message << "\n";
+            logCallback(level, message);} 
+        else {
+           std::cout <<"log:" << message << "\n";
             }
         }
-    }
-    std::vector<char> m_recvBuffer; // 默认接收缓冲区大小
+    std::vector<char> m_recvBuffer;  
     boost::asio::io_context& ioContext;
     ReceiveCallback receiveCallback;
     LogCallback logCallback;

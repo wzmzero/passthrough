@@ -5,7 +5,7 @@
 #include "ChannelUdpServer.hpp"
 #include "ChannelUdpClient.hpp"
 #include "ChannelSerial.hpp"
- 
+#include "Logger.h" // 添加头文件
  
 #include <iostream>
 #include <stdexcept>
@@ -26,21 +26,33 @@ ChannelBridge::~ChannelBridge() {
 
 void ChannelBridge::start() {
     if (m_isRunning) return;
+      // 创建桥接器前缀 (例如: "bridge1")
+    std::string bridgePrefix = "bridge" + std::to_string(m_config.id);
     
     m_channel1->start();
     m_channel2->start();
-    
+    // 设置通道日志回调
+    m_channel1->setLogCallback([this, bridgePrefix](LogLevel level, const std::string& msg) {
+        Logger::instance().log(bridgePrefix , level, "[CH1] "+msg);
+    });
+    m_channel2->setLogCallback([this, bridgePrefix](LogLevel level, const std::string& msg) {
+        Logger::instance().log(bridgePrefix, level,"[CH2] "+msg);
+    });
     // 设置双向转发回调
-    m_channel1->setReceiveCallback([this](const std::string& data) {
+    m_channel1->setReceiveCallback([this,bridgePrefix](const std::string& data) {
         if (m_channel2 && m_channel2->isRunning()) {
             m_channel2->send(data);
         }
+        std::cout << "Received data on channel 1: " << data << std::endl;
+        // Logger::instance().logData(bridgePrefix, data);
     });
     
-    m_channel2->setReceiveCallback([this](const std::string& data) {
+    m_channel2->setReceiveCallback([this,bridgePrefix](const std::string& data) {
         if (m_channel1 && m_channel1->isRunning()) {
             m_channel1->send(data);
         }
+        std::cout << "Received data on channel 2: " << data << std::endl;
+        //  Logger::instance().logData(bridgePrefix, data);
     });
     
     m_isRunning = true;

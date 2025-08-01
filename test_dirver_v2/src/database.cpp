@@ -193,3 +193,139 @@ void Database::replaceChannels(const std::vector<ChannelConfig>& channels) {
         throw;
     }
 }
+
+
+
+
+// database.cpp
+#include "database.h"
+#include <stdexcept>
+#include <ctime>
+
+FourTeleDatabase::FourTeleDatabase(const std::string& db_path) {
+    if (sqlite3_open(db_path.c_str(), &db_) != SQLITE_OK) {
+        throw std::runtime_error("Cannot open database: " + std::string(sqlite3_errmsg(db_)));
+    }
+    initDatabase();
+}
+
+FourTeleDatabase::~FourTeleDatabase() {
+    sqlite3_close(db_);
+}
+
+void FourTeleDatabase::initDatabase() {
+    executeSQL(R"(
+        PRAGMA journal_mode = WAL;
+        PRAGMA synchronous = NORMAL;
+        
+        CREATE TABLE IF NOT EXISTS tele_signal (
+            address INTEGER PRIMARY KEY,
+            value BOOLEAN NOT NULL,
+            timestamp INTEGER NOT NULL
+        );
+        
+        CREATE TABLE IF NOT EXISTS tele_measure (
+            address INTEGER PRIMARY KEY,
+            value REAL NOT NULL,
+            timestamp INTEGER NOT NULL
+        );
+        
+        CREATE TABLE IF NOT EXISTS tele_control (
+            address INTEGER PRIMARY KEY,
+            value BOOLEAN NOT NULL,
+            timestamp INTEGER NOT NULL,
+            pending BOOLEAN NOT NULL DEFAULT 0
+        );
+        
+        CREATE TABLE IF NOT EXISTS tele_adjust (
+            address INTEGER PRIMARY KEY,
+            value REAL NOT NULL,
+            timestamp INTEGER NOT NULL,
+            pending BOOLEAN NOT NULL DEFAULT 0
+        );
+    )");
+}
+
+void FourTeleDatabase::executeSQL(const std::string& sql) {
+    char* errMsg = nullptr;
+    if (sqlite3_exec(db_, sql.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        std::string error = "SQL error: " + std::string(errMsg);
+        sqlite3_free(errMsg);
+        throw std::runtime_error(error);
+    }
+}
+
+bool FourTeleDatabase::getTeleSignal(uint16_t address, TeleSignalPoint& point) {
+    const char* sql = "SELECT value, timestamp FROM tele_signal WHERE address = ?;";
+    sqlite3_stmt* stmt;
+    
+    if (sqlite3_prepare_v2(db_, sql, -1, &stmt, nullptr) != SQLITE_OK) 
+        return false;
+    
+    sqlite3_bind_int(stmt, 1, address);
+    bool result = false;
+    
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        point.address = address;
+        point.value = sqlite3_column_int(stmt, 0) != 0;
+        point.timestamp = sqlite3_column_int64(stmt, 1);
+        result = true;
+    }
+    
+    sqlite3_finalize(stmt);
+    return result;
+}
+
+bool FourTeleDatabase::updateTeleSignal(uint16_t address, bool value) {
+    const char* sql = R"(
+        INSERT OR REPLACE INTO tele_signal (address, value, timestamp)
+        VALUES (?, ?, ?);
+    )";
+    
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db_, sql, -1, &stmt, nullptr) != SQLITE_OK) 
+        return false;
+    
+    sqlite3_bind_int(stmt, 1, address);
+    sqlite3_bind_int(stmt, 2, value ? 1 : 0);
+    sqlite3_bind_int64(stmt, 3, std::time(nullptr));
+    
+    bool result = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    return result;
+}
+
+// 类似实现其他get/update方法...
+
+bool FourTeleDatabase::executePendingCommands() {
+    bool success = true;
+    
+    // 执行遥控命令
+    const char* yk_sql = "SELECT address, value FROM tele_control WHERE pending = 1;";
+    sqlite3_stmt* stmt;
+    
+    if (sqlite3_prepare_v2(db_, yk_sql, -1, &stmt, nullptr) == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            uint16_t addr = sqlite3_column_int(stmt, 0);
+            bool value = sqlite3_column_int(stmt, 1) != 0;
+            
+            // 在实际系统中这里会执行硬件控制
+            // 执行成功后更新状态
+            const char* update_sql = "UPDATE tele_control SET pending = 0 WHERE address = ?;";
+            sqlite3_stmt* update_stmt;
+            
+            if (sqlite3_prepare_v2(db_, update_sql, -1, &update_stmt, nullptr) == SQLITE_OK) {
+                sqlite3_bind_int(update_stmt, 1, addr);
+                if (sqlite3_step(update_stmt) != SQLITE_DONE) {
+                    success = false;
+                }
+                sqlite3_finalize(update_stmt);
+            }
+        }
+        sqlite3_finalize(stmt);
+    }
+    
+    // 类似执行遥调命令...
+    
+    return success;
+}

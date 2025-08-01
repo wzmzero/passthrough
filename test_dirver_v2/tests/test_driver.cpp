@@ -1,4 +1,4 @@
-/ test_driver.cpp
+// test_dirver_v2/tests/test_driver.cpp
 #include <iostream>
 #include <memory>
 #include <string>
@@ -41,9 +41,7 @@ void errorCallback(const std::string& msg) {
 void printModbusDataPoints(const std::vector<ModbusDataPoint>& points) {
     for (const auto& point : points) {
         std::cout << "  Address: 0x" << std::hex << std::setw(4) << std::setfill('0') << point.address
-                  << ", Value: " << std::dec << point.value
-                  << " (" << static_cast<int>(point.dataStyle) << "/" 
-                  << static_cast<int>(point.byteOrder) << ")\n";
+                  << ", Value: " << std::dec << point.value << "\n";
     }
 }
 
@@ -184,22 +182,22 @@ int main(int argc, char* argv[]) {
         endpoint->setDataCallback([&](const uint8_t* data, size_t len) {
             dataCallback(data, len); // 调用原始回调
             
-            ModbusDataInfo requestInfo;
+            ModbusFrameInfo requestInfo;
             if (modbus_slave->parseRequest(data, len, requestInfo)) {
                 std::cout << "\n=== Modbus Slave Request ===" << std::endl;
                 std::cout << "Function: " << static_cast<int>(requestInfo.functionCode)
-                          << ", Success: " << requestInfo.success << std::endl;
+                          << ", Success: " << !requestInfo.isException << std::endl;
                 printModbusDataPoints(requestInfo.dataPoints);
                 
                 // 处理请求
-                ModbusDataInfo responseInfo = modbus_slave->processRequest(requestInfo);
+                ModbusFrameInfo responseInfo = modbus_slave->processRequest(requestInfo);
                 
                 // 生成响应帧
                 auto response = modbus_slave->createResponse(responseInfo);
                 
                 std::cout << "\n=== Modbus Slave Response ===" << std::endl;
                 std::cout << "Function: " << static_cast<int>(responseInfo.functionCode)
-                          << ", Success: " << responseInfo.success << std::endl;
+                          << ", Success: " << !responseInfo.isException << std::endl;
                 printModbusDataPoints(responseInfo.dataPoints);
                 
                 // 发送响应
@@ -213,11 +211,11 @@ int main(int argc, char* argv[]) {
         endpoint->setDataCallback([&](const uint8_t* data, size_t len) {
             dataCallback(data, len); // 调用原始回调
             
-            ModbusDataInfo responseInfo;
+            ModbusFrameInfo responseInfo;
             if (modbus_master->parseResponse(data, len, responseInfo)) {
                 std::cout << "\n=== Modbus Master Response ===" << std::endl;
                 std::cout << "Function: " << static_cast<int>(responseInfo.functionCode)
-                          << ", Success: " << responseInfo.success << std::endl;
+                          << ", Success: " << !responseInfo.isException << std::endl;
                 printModbusDataPoints(responseInfo.dataPoints);
             }
         });
@@ -414,3 +412,4 @@ int main(int argc, char* argv[]) {
     std::cout << "Program exited cleanly" << std::endl;
     return 0;
 }
+ 

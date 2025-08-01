@@ -26,3 +26,33 @@ private:
     void insertEndpoint(sqlite3_stmt* stmt, sqlite3_int64 channelId, 
                        const std::string& role, const EndpointConfig& config);
 };
+
+
+
+
+class FourTeleDatabase {
+public:
+    FourTeleDatabase(const std::string& db_path);
+    ~FourTeleDatabase();
+    
+    // 四遥数据访问
+    bool getTeleSignal(uint16_t address, TeleSignalPoint& point);
+    bool getTeleMeasure(uint16_t address, TeleMeasurePoint& point);
+    bool getTeleControl(uint16_t address, TeleControlPoint& point);
+    bool getTeleAdjust(uint16_t address, TeleAdjustPoint& point);
+    
+    // 四遥数据更新
+    bool updateTeleSignal(uint16_t address, bool value);
+    bool updateTeleMeasure(uint16_t address, double value);
+    bool setTeleControl(uint16_t address, bool value);
+    bool setTeleAdjust(uint16_t address, double value);
+    
+    // 执行待处理的遥控/遥调命令
+    bool executePendingCommands();
+    
+private:
+    sqlite3* db_;
+    
+    void initDatabase();
+    void executeSQL(const std::string& sql);
+};

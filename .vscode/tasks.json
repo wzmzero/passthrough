@@ -1,0 +1,79 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "编译demo1",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/demo1"
+            },
+            "args": [
+                "all"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "编译demo2",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/demo2"
+            },
+            "args": [
+                "native"
+                //"${input:buildTarget}"
+            ]
+        },
+        {
+            "label": "编译demo6",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/demo6"
+            },
+            "args": [
+                ""
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "arm",
+            "type": "shell",
+            "command": "qemu-arm-static -L /usr/arm-linux-gnueabihf -g 1234 ${workspaceFolder}/demo1/build/client_arm",
+            "isBackground": true,
+            "dependsOn": "编译demo1",
+            "hide": true // 添加此行隐藏任务
+        },
+        {
+            "label": "aarch64",
+            "type": "shell",
+            "command": "qemu-aarch64-static -L /usr/aarch64-linux-gnu -g 1234 ${workspaceFolder}/demo1/build/client_aarch64",
+            "isBackground": true,
+            "dependsOn": "编译demo1",
+            "hide": true // 添加此行隐藏任务
+        }
+    ],
+    "inputs": [
+        {
+            "id": "buildTarget",
+            "type": "pickString",
+            "description": "请选择编译目标:",
+            "options": [
+                "native",
+                "arm",
+                "aarch64",
+                // "win",
+                "all"
+            ]
+        }
+    ]
+}

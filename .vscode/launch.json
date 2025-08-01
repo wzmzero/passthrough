@@ -1,0 +1,80 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug x86 demo1 server",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/demo1/build/server_native",
+      "args": [],
+      "cwd": "${workspaceFolder}/demo1",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "编译demo1" // 调试前自动编译
+    },
+    {
+      "name": "Debug QEMU ARM demo1 client",
+      "type": "cppdbg",
+      "request": "launch", // 改为附加模式
+      "program": "${workspaceFolder}/demo1/build/client_${input:qemuTask}",
+      "miDebuggerServerAddress": "localhost:1234", // 连接 QEMU GDB 服务
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb-multiarch",
+      "cwd": "${workspaceFolder}/demo1",
+      "environment": [],
+      "externalConsole": false,
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set architecture",
+          "text": "set architecture ${input:qemuTask}"
+        }
+      ],
+      "preLaunchTask": "${input:qemuTask}", // 调试前自动启动 QEMU
+    },
+    {
+      "name": "Debug test1_sql",
+      "type": "cppdbg",
+      "request": "launch", // 改为附加模式
+      "program": "${workspaceFolder}/test1_sql/protocol_converter",
+      "args": [""],
+      "cwd": "${workspaceFolder}/test1_sql",
+       "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "environment": [],
+      "externalConsole": false,
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      // "preLaunchTask": "编译demo6", 
+    },
+  ],
+  "inputs": [
+    {
+      "id": "qemuTask",
+      "type": "pickString",
+      "description": "请选择QEMU架构:",
+      "options": [
+        "arm",
+        "aarch64"
+      ],
+    }
+  ]
+}

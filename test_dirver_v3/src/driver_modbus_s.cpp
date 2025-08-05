@@ -2,9 +2,10 @@
 #include "driver_modbus_s.h"
 #include <algorithm>
 #include <stdexcept>
+#include <ctime>
 
-DriverModbusS::DriverModbusS(uint8_t address, ModbusTransportMode mode) 
-    : address_(address) {
+DriverModbusS::DriverModbusS(uint8_t address, ModbusTransportMode mode, ITelemetryDatabase* database)
+    : address_(address), database_(database) {
     transportMode_ = mode;
 }
 
@@ -204,47 +205,72 @@ ModbusFrameInfo DriverModbusS::processRequest(const ModbusFrameInfo& request) {
     response.functionCode = request.functionCode;
     response.transactionId = request.transactionId;
     
+    if (!database_) {
+        response.isException = true;
+        response.exceptionCode = 0x04; // 从站设备故障
+        return response;
+    }
+    
     try {
         switch (request.functionCode) {
             // 读操作处理
-            case ModbusFunctionCode::READ_COILS:
-                for (const auto& point : request.dataPoints) {
-                    response.dataPoints.push_back({point.address, getCoil(point.address)});
+            case ModbusFunctionCode::READ_COILS: {
+                if (!request.dataPoints.empty()) {
+                    const auto& point = request.dataPoints.front();
+                    if (processReadYX(point.address, point.value, response.dataPoints)) {
+                        // 成功读取遥信数据
+                    } else {
+                        response.isException = true;
+                        response.exceptionCode = 0x02; // 非法数据地址
+                    }
                 }
                 break;
+            }
                 
-            case ModbusFunctionCode::READ_HOLDING_REGISTERS:
-                for (const auto& point : request.dataPoints) {
-                    response.dataPoints.push_back({point.address, getHoldingRegister(point.address)});
+            case ModbusFunctionCode::READ_HOLDING_REGISTERS: {
+                if (!request.dataPoints.empty()) {
+                    const auto& point = request.dataPoints.front();
+                    if (processReadYC(point.address, point.value, response.dataPoints)) {
+                        // 成功读取遥测数据
+                    } else {
+                        response.isException = true;
+                        response.exceptionCode = 0x02; // 非法数据地址
+                    }
                 }
                 break;
+            }
                 
             // 写操作处理
-            case ModbusFunctionCode::WRITE_SINGLE_COIL:
+            case ModbusFunctionCode::WRITE_SINGLE_COIL: {
                 if (!request.dataPoints.empty()) {
                     const auto& point = request.dataPoints.front();
-                    setCoil(point.address, point.value > 0);
-                    response.dataPoints = request.dataPoints;
+                    bool value = (point.value == 0xFF00);
+                    if (processWriteYK(point.address, value)) {
+                        response.dataPoints = request.dataPoints;
+                    } else {
+                        response.isException = true;
+                        response.exceptionCode = 0x02; // 非法数据地址
+                    }
                 }
                 break;
+            }
                 
-            case ModbusFunctionCode::WRITE_SINGLE_REGISTER:
+            case ModbusFunctionCode::WRITE_SINGLE_REGISTER: {
                 if (!request.dataPoints.empty()) {
                     const auto& point = request.dataPoints.front();
-                    setHoldingRegister(point.address, point.value);
-                    response.dataPoints = request.dataPoints;
+                    if (processWriteYT(point.address, point.value)) {
+                        response.dataPoints = request.dataPoints;
+                    } else {
+                        response.isException = true;
+                        response.exceptionCode = 0x02; // 非法数据地址
+                    }
                 }
                 break;
-                
-            case ModbusFunctionCode::SHGK_WRITE:
-                for (const auto& point : request.dataPoints) {
-                    setHoldingRegister(point.address, point.value);
-                }
-                response.dataPoints = request.dataPoints;
-                break;
+            }
                 
             default:
-                throw std::runtime_error("Unsupported function code");
+                response.isException = true;
+                response.exceptionCode = 0x01; // 非法功能码
         }
     } catch (...) {
         response.isException = true;
@@ -254,13 +280,47 @@ ModbusFrameInfo DriverModbusS::processRequest(const ModbusFrameInfo& request) {
     return response;
 }
 
-// 内存映射访问实现
-bool DriverModbusS::getCoil(uint16_t addr) const {
-    auto it = coils_.find(addr);
-    return it != coils_.end() ? it->second : false;
+ModbusDataPoint DriverModbusS::convertToModbusPoint(const TelemetryPoint& tp) {
+    ModbusDataPoint mp;
+    mp.address = tp.address;
+    // 将浮点值转换为16位整数（实际应用中可能需要更复杂的转换）
+    mp.value = static_cast<uint16_t>(tp.value);
+    return mp;
 }
 
-uint16_t DriverModbusS::getHoldingRegister(uint16_t addr) const {
-    auto it = holdings_.find(addr);
-    return it != holdings_.end() ? it->second : 0;
+bool DriverModbusS::processReadYC(uint16_t start, uint16_t count, 
+                                 std::vector<ModbusDataPoint>& points) {
+    std::vector<TelemetryPoint> ycPoints;
+    if (database_->readMultipleYC(start, count, ycPoints)) {
+        for (const auto& tp : ycPoints) {
+            points.push_back(convertToModbusPoint(tp));
+        }
+        return true;
+    }
+    return false;
+}
+
+bool DriverModbusS::processReadYX(uint16_t start, uint16_t count, 
+                                 std::vector<ModbusDataPoint>& points) {
+    std::vector<TelemetryPoint> yxPoints;
+    if (database_->readMultipleYX(start, count, yxPoints)) {
+        for (const auto& tp : yxPoints) {
+            ModbusDataPoint mp;
+            mp.address = tp.address;
+            mp.value = (tp.value > 0.5) ? 0xFF00 : 0x0000; // 转换为线圈值
+            points.push_back(mp);
+        }
+        return true;
+    }
+    return false;
+}
+
+bool DriverModbusS::processWriteYK(uint16_t address, bool value) {
+    return database_->writeYK(address, value);
+}
+
+bool DriverModbusS::processWriteYT(uint16_t address, uint16_t value) {
+    // 将16位整数转换为浮点数（实际应用中可能需要更复杂的转换）
+    double floatValue = static_cast<double>(value);
+    return database_->writeYT(address, floatValue);
 }

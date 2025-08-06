@@ -3,17 +3,27 @@ CXX := g++
 CXXFLAGS := -std=c++17 -Iinclude -Wall -O2
 LDFLAGS := -lsqlite3
 
-# 源文件和目标
+# 目录设置
 SRC_DIR := src
+TESTS_DIR := tests
+BUILD_DIR := build
+
+# 源文件
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(SRCS:.cpp=.o)
-TARGET := sqlite_orm_demo
+TEST_SRCS := $(wildcard $(TESTS_DIR)/*.cpp)
+
+# 目标文件
+SRC_OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
+TEST_OBJS := $(patsubst $(TESTS_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TEST_SRCS))
+
+# 可执行目标
+TARGETS := $(notdir $(basename $(TEST_SRCS)))
 
 # 安装依赖检查
 SQLITE_CHECK := $(shell dpkg -l | grep libsqlite3-dev || echo "not-installed")
 
-# 默认目标
-all: check_dep $(TARGET)
+# 默认目标：检查依赖并构建所有目标
+all: check_dep $(BUILD_DIR) $(TARGETS)
 
 # 检查依赖
 check_dep:
@@ -21,21 +31,25 @@ ifeq ($(SQLITE_CHECK), not-installed)
 	$(error "libsqlite3-dev is not installed. Run: sudo apt install libsqlite3-dev")
 endif
 
-# 链接可执行文件
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+# 创建构建目录
+$(BUILD_DIR):
+	mkdir -p $@
 
-# 编译规则
-%.o: %.cpp
+# 编译库源文件
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# 清理
+# 编译测试源文件
+$(BUILD_DIR)/%.o: $(TESTS_DIR)/%.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# 链接可执行文件
+%: $(BUILD_DIR)/%.o $(SRC_OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+
+# 清理所有生成的文件
 clean:
-	rm -f $(OBJS) $(TARGET) multi_object.db
+	rm -rf $(TARGETS) $(BUILD_DIR) multi_object.db
 
-# 运行程序
-run: $(TARGET)
-	./$(TARGET)
-
- 
-.PHONY: all clean run check_dep  
+# 伪目标声明
+.PHONY: all clean check_dep

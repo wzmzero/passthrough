@@ -2,8 +2,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
-
-namespace sql = sqlite_orm;
+ 
 
 // 端点配置结构体
 struct EndpointConfig {
@@ -31,16 +30,16 @@ struct ChannelConfig {
     int input_id;  // 外键 -> EndpointConfig.id
     int output_id; // 外键 -> EndpointConfig.id
     // 嵌套对象（程序内使用）
-    std::shared_ptr<EndpointConfig> input;  
-    std::shared_ptr<EndpointConfig> output; 
+    EndpointConfig input;  
+    EndpointConfig output; 
 
     bool operator==(const ChannelConfig& other) const {
         return id == other.id &&
                name == other.name &&
                input_id == other.input_id &&
                output_id == other.output_id &&
-               *input == *(other.input) &&
-               *output == *(other.output);
+               input == other.input &&
+               output == other.output;
     }
 };
 
@@ -89,24 +88,15 @@ int main() {
     auto outputId = storage.insert(outputEndpoint);
 
     // 3. 创建通道配置（使用智能指针管理嵌套对象）
-    auto channel = std::make_shared<ChannelConfig>();
-    channel->name = "Channel3";
-    channel->input_id = inputId;
-    channel->output_id = outputId;
-    channel->input = std::make_shared<EndpointConfig>(inputEndpoint);
-    channel->input->id = inputId;
-    channel->output = std::make_shared<EndpointConfig>(outputEndpoint);
-    channel->output->id = outputId;
+   
+    // 4. 插入通道到数据库  
+    storage.get<EndpointConfig>(inputId);
+    storage.get<EndpointConfig>(outputId);
 
-    // 4. 插入通道到数据库
-    auto channelId = storage.insert(*channel);
-    channel->id = channelId;
-    std::cout << "插入通道 ID: " << channelId << "\n";
+    storage.remove<EndpointConfig>(inputId);
+    storage.remove<EndpointConfig>(outputId);
     try{
-        auto query_obj = sql::where(sql::c(&ChannelConfig::name) == "Channel1");
-        std::cout << "查询通道 ID: " << storage.count<ChannelConfig>(query_obj) << "\n"; // 应输出1
-        auto channel = storage.get<ChannelConfig>(channelId);
-        std::cout << "channel = " << channel.name << std::endl;
+ 
     }catch(std::system_error e) {
         std::cout << e.what() << std::endl;
     }catch(...){

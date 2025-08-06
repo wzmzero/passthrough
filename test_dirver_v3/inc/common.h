@@ -8,7 +8,7 @@
 #include <functional>
 #include <unordered_map>
 #include <variant>
-#include <sqlite_orm/sqlite_orm.h>
+ 
 // 传输模式枚举
 enum class ModbusTransportMode {
     RTU,

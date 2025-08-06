@@ -31,7 +31,8 @@ struct ChannelConfig {
     std::string name;
     EndpointConfig input;
     EndpointConfig output;
-
+    int input_id;  // 外键 -> EndpointConfig.id
+    int output_id; // 外键 -> EndpointConfig.id
     // 添加比较运算符
     bool operator==(const ChannelConfig& other) const {
         return name == other.name &&

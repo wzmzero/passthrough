@@ -14,9 +14,9 @@ public:
     
     // 保存通道配置到数据库
     void saveChannels(const std::vector<ChannelConfig>& channels);
-    
-    // 清空并替换所有配置
+    // 清空并替换所有配置 
     void replaceChannels(const std::vector<ChannelConfig>& channels);
+
 
 private:
     sqlite3* db_;
@@ -26,3 +26,5 @@ private:
     void insertEndpoint(sqlite3_stmt* stmt, sqlite3_int64 channelId, 
                        const std::string& role, const EndpointConfig& config);
 };
+
+

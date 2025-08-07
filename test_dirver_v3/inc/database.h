@@ -45,10 +45,10 @@ inline auto makeStorageSchema(const std::string& filename) {
             make_column("id", &MasterPoint::id, primary_key()),
             make_column("name", &MasterPoint::name),
             make_column("register_address", &MasterPoint::register_address),
-            // make_column("data_type", &MasterPoint::data_type),
-            // make_column("value_type", &MasterPoint::value_type),    
-            // make_column("value", &MasterPoint::value),
-            // make_column("timestamp", &MasterPoint::timestamp),
+            make_column("data_type", &MasterPoint::data_type),
+            make_column("value_type", &MasterPoint::value_type),    
+            make_column("value", &MasterPoint::value),
+            make_column("timestamp", &MasterPoint::timestamp),
             make_column("unit", &MasterPoint::unit),
             make_column("request_flag", &MasterPoint::request_flag)  // 新增请求标志
         ),
@@ -57,10 +57,10 @@ inline auto makeStorageSchema(const std::string& filename) {
             make_column("id", &SlavePoint::id, primary_key()),
             make_column("name", &SlavePoint::name),
             make_column("register_address", &SlavePoint::register_address),
-            // make_column("data_type", &SlavePoint::data_type),
-            // make_column("value_type", &SlavePoint::value_type),
-            // make_column("value", &SlavePoint::value),
-            // make_column("timestamp", &SlavePoint::timestamp),
+            make_column("data_type", &SlavePoint::data_type),
+            make_column("value_type", &SlavePoint::value_type),
+            make_column("value", &SlavePoint::value),
+            make_column("timestamp", &SlavePoint::timestamp),
             make_column("unit", &SlavePoint::unit)
         )
 

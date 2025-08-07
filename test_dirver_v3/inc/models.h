@@ -36,10 +36,10 @@ struct MasterPoint  {
         int id = 0;                         // 主键ID
     std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
     uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
-    // TelemDataType data_type;                // 四遥类型
-    // ValueType value_type;                   // 值类型
-    // std::any value;                         // 存储实际值
-    // std::time_t timestamp;                  // 时间戳
+    TelemDataType data_type;                // 四遥类型
+    ValueType value_type;                   // 值类型
+    std::any value;                         // 存储实际值
+    std::time_t timestamp;                  // 时间戳
     std::string unit;   
     bool request_flag = false;   // 请求标志 (0-未请求, 1-请求中, 2-已请求)  
 };
@@ -47,10 +47,10 @@ struct SlavePoint  {
     int id = 0;                         // 主键ID
     std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
     uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
-    // TelemDataType data_type;                // 四遥类型
-    // ValueType value_type;                   // 值类型
-    // std::any value;                         // 存储实际值
-    // std::time_t timestamp;                  // 时间戳
+    TelemDataType data_type;                // 四遥类型
+    ValueType value_type;                   // 值类型
+    std::any value;                         // 存储实际值
+    std::time_t timestamp;                  // 时间戳
     std::string unit;   
 };
 
@@ -139,14 +139,7 @@ inline ValueType ValueTypeFromString(const std::string& str) {
 
 // ========== 整合所有 sqlite_orm 特化到单个命名空间 ==========
 namespace sqlite_orm {
-    // ==========     int id = 0;                         // 主键ID
-    std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
-    uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
-    // TelemDataType data_type;                // 四遥类型
-    // ValueType value_type;                   // 值类型
-    // std::any value;                         // 存储实际值
-    // std::time_t timestamp;                  // 时间戳
-    std::string unit;    for TelemDataType ==========
+    // ========== 特化 for TelemDataType ==========
     template<>
     struct type_printer<TelemDataType> : public text_printer {};
     

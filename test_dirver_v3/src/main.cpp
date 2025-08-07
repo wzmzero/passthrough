@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include "logrecord.h"
 std::atomic<bool> running{true};
-
+std::mutex configMutex;
 void signalHandler(int signal) {
     running = false;
     if(signal == SIGINT) {
@@ -20,6 +20,7 @@ void signalHandler(int signal) {
     }
 }
 
+ 
 int main(int argc, char* argv[]) {
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
@@ -38,7 +39,7 @@ int main(int argc, char* argv[]) {
             auto channels = parser->parse(argv[2]);
             
             // 保存到数据库
-            Database db;
+            Database db("config/config.db");
             db.replaceChannels(channels);
             LOG_INFO("Configuration updated from %s", argv[2]);
             return 0;
@@ -46,9 +47,10 @@ int main(int argc, char* argv[]) {
         
         
         // 从数据库加载初始配置
-        Database db;
+        Database db("config/config.db");
         auto channels = db.loadChannels();
-        
+   
+
         ChannelManager manager;
         std::unordered_map<std::string, ChannelConfig> last_configs;
         

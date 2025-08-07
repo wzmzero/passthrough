@@ -6,7 +6,7 @@
 
 class Database {
 public:
-    explicit Database(const std::string& db_path = "config.dbconfig.db");
+    explicit Database(const std::string& db_path = "config/config.db");
     ~Database();
     
     // 加载所有通道配置

@@ -1,5 +1,5 @@
 #pragma once
-#include "shared_structs.h"
+#include "models.h"
 #include <vector>
 #include <string>
 #include <memory>

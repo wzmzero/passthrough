@@ -66,32 +66,32 @@ channels:
   #     type: "tcp_server"
   #     port: 9003
 
-  - name: "Channel 9"
-    input:
-      type: "tcp_server"
-      port: 7004
-    output:
-      type: "tcp_server"
-      port: 9004
-  - name: "Channel 10"
-    input:
-      type: "tcp_server"
-      port: 7005
-    output:
-      type: "tcp_server"
-      port: 9005
-  - name: "Channel 11"
-    input:
-      type: "tcp_server"
-      port: 7006
-    output:
-      type: "tcp_server"
-      port: 9006
-  - name: "Channel 12"
-    input:
-      type: "tcp_server"
-      port: 7007
-    output:
-      type: "tcp_server"
-      port: 9007
+  # - name: "Channel 9"
+  #   input:
+  #     type: "tcp_server"
+  #     port: 7004
+  #   output:
+  #     type: "tcp_server"
+  #     port: 9004
+  # - name: "Channel 10"
+  #   input:
+  #     type: "tcp_server"
+  #     port: 7005
+  #   output:
+  #     type: "tcp_server"
+  #     port: 9005
+  # - name: "Channel 11"
+  #   input:
+  #     type: "tcp_server"
+  #     port: 7006
+  #   output:
+  #     type: "tcp_server"
+  #     port: 9006
+  # - name: "Channel 12"
+  #   input:
+  #     type: "tcp_server"
+  #     port: 7007
+  #   output:
+  #     type: "tcp_server"
+  #     port: 9007
   

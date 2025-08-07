@@ -104,9 +104,9 @@ int main(int argc, char* argv[]) {
         iec104_master = std::make_unique<Driver104M>(1); // 公共地址设为1
         
         // 设置数据回调
-        iec104_master->setDataCallback([&](uint32_t addr, float value) {
-            std::cout << "\n[104 Callback] Addr: " << addr << ", Value: " << value << "\n";
-        });
+        // iec104_master->setDataCallback([&](uint32_t addr, float value) {
+        //     std::cout << "\n[104 Callback] Addr: " << addr << ", Value: " << value << "\n";
+        // });
         
         // 设置端点回调
         endpoint->setDataCallback([&](const uint8_t* data, size_t len) {

@@ -18575,3 +18575,24 @@
 2025-07-21 15:31:57.275 [NODE1 RECV]4 bytes: 38 30 37 30
 2025-07-21 15:31:57.275 [INFO ] [Channel 3] [NODE1->NODE2] 4 bytes: 8070
 2025-07-21 15:31:59.473 [INFO ] [Channel 3] [NODE1] Client disconnected: 172.16.24.69:51968
+2025-08-07 10:16:04.843 [INFO ] [Channel 3] Creating channel Channel 3
+2025-08-07 10:16:04.853 [INFO ] [Channel 3] Input: tcp_server, Output: udp_server
+2025-08-07 10:16:04.864 [INFO ] [Channel 3] [NODE2] UDP server started on port 8082
+2025-08-07 10:16:04.864 [INFO ] [Channel 3] ---------------Channel started---------------
+2025-08-07 10:16:22.408 [INFO ] [Channel 3] [NODE2] UDP server closed
+2025-08-07 10:16:22.408 [INFO ] [Channel 3] Channel stopped
+2025-08-07 10:16:22.793 [INFO ] [Channel 3] [NODE2] UDP server closed
+2025-08-07 10:24:34.472 [INFO ] [Channel 3] Creating channel Channel 3
+2025-08-07 10:24:34.472 [INFO ] [Channel 3] Input: tcp_server, Output: udp_server
+2025-08-07 10:24:34.472 [INFO ] [Channel 3] [NODE2] UDP server started on port 8082
+2025-08-07 10:24:34.472 [INFO ] [Channel 3] ---------------Channel started---------------
+2025-08-07 10:25:07.170 [INFO ] [Channel 3] [NODE2] UDP server closed
+2025-08-07 10:25:07.170 [INFO ] [Channel 3] Channel stopped
+2025-08-07 10:25:07.464 [INFO ] [Channel 3] [NODE2] UDP server closed
+2025-08-07 16:31:31.674 [INFO ] [Channel 3] Creating channel Channel 3
+2025-08-07 16:31:31.681 [INFO ] [Channel 3] Input: tcp_server, Output: udp_server
+2025-08-07 16:31:31.698 [INFO ] [Channel 3] [NODE2] UDP server started on port 8082
+2025-08-07 16:31:31.698 [INFO ] [Channel 3] ---------------Channel started---------------
+2025-08-07 16:31:37.217 [INFO ] [Channel 3] [NODE2] UDP server closed
+2025-08-07 16:31:37.217 [INFO ] [Channel 3] Channel stopped
+2025-08-07 16:31:37.381 [INFO ] [Channel 3] [NODE2] UDP server closed

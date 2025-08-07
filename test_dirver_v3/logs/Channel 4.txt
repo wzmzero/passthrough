@@ -13250,3 +13250,24 @@
 2025-07-21 15:31:57.267 [INFO ] [Channel 4] [NODE1->NODE2] 4 bytes: 8080
 2025-07-21 15:31:58.871 [NODE1 RECV]4 bytes: 38 30 38 30
 2025-07-21 15:31:58.871 [INFO ] [Channel 4] [NODE1->NODE2] 4 bytes: 8080
+2025-08-07 10:16:04.866 [INFO ] [Channel 4] Creating channel Channel 4
+2025-08-07 10:16:04.875 [INFO ] [Channel 4] Input: udp_client, Output: tcp_server
+2025-08-07 10:16:04.875 [INFO ] [Channel 4] [NODE1] UDP client connected to 172.16.24.69:8080
+2025-08-07 10:16:04.875 [INFO ] [Channel 4] ---------------Channel started---------------
+2025-08-07 10:16:22.418 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-08-07 10:16:22.430 [INFO ] [Channel 4] Channel stopped
+2025-08-07 10:16:22.793 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-08-07 10:24:34.474 [INFO ] [Channel 4] Creating channel Channel 4
+2025-08-07 10:24:34.474 [INFO ] [Channel 4] Input: udp_client, Output: tcp_server
+2025-08-07 10:24:34.474 [INFO ] [Channel 4] [NODE1] UDP client connected to 172.16.24.69:8080
+2025-08-07 10:24:34.474 [INFO ] [Channel 4] ---------------Channel started---------------
+2025-08-07 10:25:07.182 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-08-07 10:25:07.271 [INFO ] [Channel 4] Channel stopped
+2025-08-07 10:25:07.464 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-08-07 16:31:31.701 [INFO ] [Channel 4] Creating channel Channel 4
+2025-08-07 16:31:31.727 [INFO ] [Channel 4] Input: udp_client, Output: tcp_server
+2025-08-07 16:31:31.728 [INFO ] [Channel 4] [NODE1] UDP client connected to 172.16.24.69:8080
+2025-08-07 16:31:31.728 [INFO ] [Channel 4] ---------------Channel started---------------
+2025-08-07 16:31:37.249 [INFO ] [Channel 4] [NODE1] UDP client disconnected
+2025-08-07 16:31:37.349 [INFO ] [Channel 4] Channel stopped
+2025-08-07 16:31:37.382 [INFO ] [Channel 4] [NODE1] UDP client disconnected

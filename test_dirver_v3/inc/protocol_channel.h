@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 #include <atomic>
-#include "shared_structs.h"
+#include "models.h"
 class ProtocolChannel {
 public:
     ProtocolChannel(const std::string& name,

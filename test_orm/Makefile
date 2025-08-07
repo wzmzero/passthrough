@@ -1,7 +1,7 @@
 # 编译器设置
 CXX := g++
 CXXFLAGS := -std=c++17 -Iinclude -Wall -O2
-LDFLAGS := -lsqlite3
+LDFLAGS := -lsqlite3 -lyaml-cpp 
 
 # 目录设置
 SRC_DIR := src

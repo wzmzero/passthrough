@@ -30373,3 +30373,183 @@
 2025-07-21 15:35:03.329 [INFO ] [Channel 2] [NODE2] Connection closed
 2025-07-21 15:35:04.331 [INFO ] [Channel 2] [NODE2] Attempting to connect...
 2025-07-21 15:35:04.373 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:04.837 [INFO ] [Channel 2] Creating channel Channel 2
+2025-08-07 10:16:04.841 [INFO ] [Channel 2] Input: udp_server, Output: tcp_client
+2025-08-07 10:16:04.841 [INFO ] [Channel 2] [NODE1] UDP server started on port 8081
+2025-08-07 10:16:04.841 [INFO ] [Channel 2] ---------------Channel started---------------
+2025-08-07 10:16:05.846 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:05.867 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:05.867 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:06.871 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:06.881 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:06.881 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:07.889 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:07.903 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:07.903 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:08.905 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:08.915 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:08.915 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:09.918 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:09.925 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:09.926 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:10.927 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:10.934 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:10.934 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:11.936 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:11.941 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:11.942 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:12.943 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:12.951 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:12.951 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:13.953 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:13.968 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:13.968 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:14.969 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:14.977 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:14.977 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:15.979 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:15.995 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:15.995 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:16.997 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:17.004 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:17.004 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:18.007 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:18.016 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:18.016 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:19.019 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:19.029 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:19.029 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:20.032 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:20.040 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:20.040 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:21.043 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:21.048 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:21.049 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:22.052 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:16:22.163 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:16:22.163 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:16:22.181 [INFO ] [Channel 2] [NODE1] UDP server closed
+2025-08-07 10:16:22.264 [INFO ] [Channel 2] Channel stopped
+2025-08-07 10:16:22.793 [INFO ] [Channel 2] [NODE1] UDP server closed
+2025-08-07 10:24:34.470 [INFO ] [Channel 2] Creating channel Channel 2
+2025-08-07 10:24:34.470 [INFO ] [Channel 2] Input: udp_server, Output: tcp_client
+2025-08-07 10:24:34.470 [INFO ] [Channel 2] [NODE1] UDP server started on port 8081
+2025-08-07 10:24:34.470 [INFO ] [Channel 2] ---------------Channel started---------------
+2025-08-07 10:24:35.474 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:35.490 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:35.491 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:36.494 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:36.547 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:36.548 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:37.551 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:37.563 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:37.563 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:38.567 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:38.573 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:38.574 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:39.578 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:39.585 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:39.585 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:40.589 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:40.597 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:40.597 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:41.601 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:41.611 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:41.612 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:42.616 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:42.745 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:42.745 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:43.748 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:43.769 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:43.769 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:44.773 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:44.901 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:44.902 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:45.905 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:45.934 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:45.934 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:46.939 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:46.969 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:46.969 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:47.971 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:48.004 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:48.005 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:49.006 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:49.026 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:49.027 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:50.028 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:50.089 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:50.089 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:51.091 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:51.142 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:51.142 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:52.145 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:52.193 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:52.194 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:53.196 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:53.206 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:53.207 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:54.209 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:54.215 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:54.215 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:55.234 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:55.248 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:55.248 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:56.250 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:56.301 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:56.301 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:57.303 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:57.311 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:57.311 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:58.314 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:58.330 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:58.330 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:24:59.332 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:24:59.365 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:24:59.365 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:00.367 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:25:00.379 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:25:00.379 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:01.382 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:25:01.390 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:25:01.390 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:02.393 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:25:02.401 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:25:02.401 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:03.404 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:25:03.413 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:25:03.414 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:04.416 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:25:04.423 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:25:04.423 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:05.426 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:25:05.433 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:25:05.433 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:06.436 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 10:25:06.447 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 10:25:06.447 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 10:25:06.958 [INFO ] [Channel 2] [NODE1] UDP server closed
+2025-08-07 10:25:07.151 [INFO ] [Channel 2] Channel stopped
+2025-08-07 10:25:07.463 [INFO ] [Channel 2] [NODE1] UDP server closed
+2025-08-07 16:31:31.663 [INFO ] [Channel 2] Creating channel Channel 2
+2025-08-07 16:31:31.671 [INFO ] [Channel 2] Input: udp_server, Output: tcp_client
+2025-08-07 16:31:31.671 [INFO ] [Channel 2] [NODE1] UDP server started on port 8081
+2025-08-07 16:31:31.672 [INFO ] [Channel 2] ---------------Channel started---------------
+2025-08-07 16:31:32.675 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 16:31:32.684 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 16:31:32.684 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 16:31:33.688 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 16:31:33.696 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 16:31:33.696 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 16:31:34.701 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 16:31:34.713 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 16:31:34.713 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 16:31:35.715 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 16:31:35.723 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 16:31:35.723 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 16:31:36.726 [INFO ] [Channel 2] [NODE2] Attempting to connect...
+2025-08-07 16:31:36.737 [ERROR] [Channel 2] [NODE2] Connection failed: Connection refused
+2025-08-07 16:31:36.737 [INFO ] [Channel 2] [NODE2] Connection closed
+2025-08-07 16:31:36.892 [INFO ] [Channel 2] [NODE1] UDP server closed
+2025-08-07 16:31:37.038 [INFO ] [Channel 2] Channel stopped
+2025-08-07 16:31:37.381 [INFO ] [Channel 2] [NODE1] UDP server closed

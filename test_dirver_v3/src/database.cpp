@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
+
 // 创建存储的具体实现
 Database::StorageType Database::createStorage(const std::string& filename) {
     return makeStorageSchema(filename);
@@ -51,6 +52,38 @@ void Database::updateHook(void* self, int op, const char* dbName, const char* ta
         cb(table, op, rid, data);
     }
 }
+
+  
+
+// 初始化模拟数据
+void Database::initSampleData() {
+     auto now = std::time(nullptr);
+    
+    // 统一的数据源
+    std::vector<TelemetryPoint> allPoints = {
+
+        {0, "断路器控制", 0x2001, TelemDataType::YK, ValueType::Boolean, 
+         false, now, "", 0, 0},
+        {0, "目标温度", 0x3001, TelemDataType::YT, ValueType::Float, 
+         25.0f, now, "°C", 0, 0},
+
+        {0, "温度反馈", 0x5001, TelemDataType::YC, ValueType::Float, 
+         24.5f, now, "°C", 0, 0},
+        {0, "压力反馈", 0x5002, TelemDataType::YC, ValueType::Float, 
+         1.2f, now, "MPa", 0, 0},
+
+        {0, "电压1", 0x4001, TelemDataType::YC, ValueType::Float, 
+         220.5f, now, "V", 0, 0},
+        {0, "电流1", 0x4003, TelemDataType::YC, ValueType::Float, 
+         15.3f, now, "A", 0, 0}
+    };
+    
+    // 使用模板初始化不同类型的点
+    initPoints<MasterPoint>(allPoints);
+    initPoints<SlavePoint>(allPoints);
+    initPoints<TelemetryPoint>(allPoints);
+}
+
 
 // 加载所有通道配置（包含端点信息）
 std::vector<ChannelConfig> Database::loadChannels() {

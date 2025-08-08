@@ -5,6 +5,12 @@
 #include <ctime>
 #include <any>
 #include <stdexcept>
+// 添加点关联映射
+struct TelemetryLink {
+    int master_id;  // Master点ID
+    int slave_id;   // Slave点ID
+    int point_id;   // TelemetryPoint点ID
+};
 // 四遥数据类型枚举
 enum class TelemDataType {
     YX,     // 遥测     0001H-4001H
@@ -20,40 +26,62 @@ enum class ValueType {
     Float         // 浮点数
 };
 
-// 四遥数据点结构体
-struct TelemPoint {
-    int id = 0;                         // 主键ID
+ // Telemetry
+struct TelemetryPoint{
+    int id = 0;              // 主键ID
     std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
     uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
-    // TelemDataType data_type;                // 四遥类型
-    // ValueType value_type;                   // 值类型
-    // std::any value;                         // 存储实际值
-    // std::time_t timestamp;                  // 时间戳
+    TelemDataType data_type;                // 四遥类型
+    ValueType value_type;                   // 值类型
+    std::any value;                         // 存储实际值
+    std::time_t timestamp;                  // 时间戳
     std::string unit;                       // 单位 (e.g., "V", "A", "m/s")
-};
-// Master点结构体
-struct MasterPoint  {   
-        int id = 0;                         // 主键ID
-    std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
-    uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
-    TelemDataType data_type;                // 四遥类型
-    ValueType value_type;                   // 值类型
-    std::any value;                         // 存储实际值
-    std::time_t timestamp;                  // 时间戳
-    std::string unit;   
-    bool request_flag = false;   // 请求标志 (0-未请求, 1-请求中, 2-已请求)  
-};
-struct SlavePoint  {
-    int id = 0;                         // 主键ID
-    std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
-    uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
-    TelemDataType data_type;                // 四遥类型
-    ValueType value_type;                   // 值类型
-    std::any value;                         // 存储实际值
-    std::time_t timestamp;                  // 时间戳
-    std::string unit;   
+    int rw_flag = 0;              // 0: 不请求, 1: 读请求 2: 写请求
+    int return_flag = 0;         // 0: 无状态, 1: 返回成功标志 2: 返回失败标志
+    // 通用赋值方法
+    template <typename T>
+    T as() const {
+        return T {
+            id,
+            name,
+            register_address,
+            data_type,
+            value_type,
+            value,
+            timestamp,
+            unit,
+            rw_flag,
+            return_flag
+        };
+    }
 };
 
+// Master点结构体
+struct MasterPoint{
+    int id = 0;                         // 主键ID
+    std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
+    uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
+    TelemDataType data_type;                // 四遥类型
+    ValueType value_type;                   // 值类型
+    std::any value;                         // 存储实际值
+    std::time_t timestamp;                  // 时间戳
+    std::string unit;                       // 单位 (e.g., "V", "A", "m/s")
+    int rw_flag = 0;              // 0: 不请求, 1: 读请求 2: 写请求
+    int return_flag = 0;         // 0: 无状态, 1: 返回成功标志 2: 返回失败标志
+};      
+struct SlavePoint {
+    int id = 0;                         // 主键ID
+    std::string name;                       // 名称 (e.g., "voltage", "coil_switch")
+    uint32_t register_address;          // 寄存器地址 (e.g., "0x4001")
+    TelemDataType data_type;                // 四遥类型
+    ValueType value_type;                   // 值类型
+    std::any value;                         // 存储实际值
+    std::time_t timestamp;                  // 时间戳
+    std::string unit;                       // 单位 (e.g., "V", "A", "m/s")
+    int rw_flag = 0;              // 0: 不请求, 1: 读请求 2: 写请求
+    int return_flag = 0;         // 0: 无状态, 1: 返回成功标志 2: 返回失败标志
+};
+ 
 // 端点配置结构体
 struct EndpointConfig {
     int id = 0;  // 主键

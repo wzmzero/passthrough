@@ -17,6 +17,12 @@ inline auto makeStorageSchema(const std::string& filename) {
     using namespace sqlite_orm;
     return make_storage(
         filename,
+        // Instance实例表
+        make_table("instance",
+            make_column("id", &InstanceParm::id, primary_key()),
+            make_column("name", &InstanceParm::name),
+            make_column("instance_type", &InstanceParm::type)
+        ),
         // Channel表
         make_table("channel",
             make_column("id", &EndpointConfig::id, primary_key()),
@@ -24,7 +30,11 @@ inline auto makeStorageSchema(const std::string& filename) {
             make_column("port", &EndpointConfig::port),
             make_column("ip", &EndpointConfig::ip),
             make_column("serial_port", &EndpointConfig::serial_port),
-            make_column("baud_rate", &EndpointConfig::baud_rate)
+            make_column("baud_rate", &EndpointConfig::baud_rate),
+            make_column("instance_id", &EndpointConfig::instance_id),
+            foreign_key(&EndpointConfig::instance_id)
+                .references(&InstanceParm::id)
+                .on_update.cascade()
         ),
         // 透传表
         make_table("passthrough",
@@ -34,23 +44,26 @@ inline auto makeStorageSchema(const std::string& filename) {
             make_column("output_id", &ChannelConfig::output_id),
             foreign_key(&ChannelConfig::input_id)
                 .references(&EndpointConfig::id)
-                .on_delete.cascade()
                 .on_update.cascade(),
             foreign_key(&ChannelConfig::output_id)
                 .references(&EndpointConfig::id)
-                .on_delete.cascade()
                 .on_update.cascade()
         ),
         // Driver协议表
         make_table("driver",
             make_column("id", &DriverParam_Mid::id, primary_key()),
             make_column("proto_type", &DriverParam_Mid::proto_type),
-            make_column("json_params", &DriverParam_Mid::json_params),   //其他扩展的配置参数
-            make_column("desc", &DriverParam_Mid::desc)
+            make_column("param_name", &DriverParam_Mid::param_name),   //其他扩展的配置参数
+            make_column("param_value", &DriverParam_Mid::param_value), 
+            make_column("desc", &DriverParam_Mid::desc),
+            make_column("instance_id", &DriverParam_Mid::instance_id), 
+            foreign_key(&DriverParam_Mid::instance_id)
+                .references(&InstanceParm::id)
+                .on_update.cascade()
         ),
         //DevInfo表
         make_table("devInfo",
-            make_column("dataId", &DevInfo::dataId, primary_key()),
+            make_column("dataId", &DevInfo::dataId),
             make_column("description", &DevInfo::description),
             make_column("slave_addr", &DevInfo::slave_addr),
             make_column("proAddr", &DevInfo::proAddr),
@@ -58,11 +71,14 @@ inline auto makeStorageSchema(const std::string& filename) {
             make_column("value_type", &DevInfo::value_type),    
             make_column("value", &DevInfo::value),
             make_column("unit", &DevInfo::unit),
-            make_column("instance_id",&DevInfo::instance_id)
+            make_column("instance_id", &DevInfo::instance_id),
+            foreign_key(&DevInfo::instance_id)
+                .references(&InstanceParm::id)
+                .on_update.cascade()
         ),
         //Data数据表
         make_table("dataset",
-            make_column("dataId", &Dataset::dataId, primary_key()),
+            make_column("dataId", &Dataset::dataId),
             make_column("name", &Dataset::name),
             make_column("data_type", &Dataset::data_type),
             make_column("value_type", &Dataset::value_type),    
@@ -86,18 +102,21 @@ public:
     std::vector<ChannelConfig> loadChannels();
     void replaceChannels(std::vector<ChannelConfig>& channels);
  
-    // 设备信息操作函数
-    void replaceDevInfos(std::vector<DevInfo>& devInfos);
-    VecDevInfo loadDevInfosByInstanceId(int instance_id);
+    // 实例操作函数
+    std::vector<InstanceParm> loadInstances();
+    void replaceInstances(std::vector<InstanceParm>& instances);
     
-    // 驱动参数操作函数
-    std::vector<DriverParam_Mid> loadDriverParams();
-    DriverParam parseDriverParam(const DriverParam_Mid& param);
- 
+    void initSampleData();
+
 private:
     static StorageType createStorage(const std::string& filename);
     static void updateHook(void* self, int op, const char* dbName, const char* tableName, sqlite3_int64 rowid);
 
+    // 转换函数：将DriverParam_Mid转换为DriverParam
+    DriverParam convertToDriverParam(const std::vector<DriverParam_Mid>& params);
+    // 转换函数：将DriverParam转换为std::vector<DriverParam_Mid>
+    std::vector<DriverParam_Mid> convertFromDriverParam(const DriverParam& driverParam, int instanceId);
+    
     void handleTableUpdate(const std::string& table, int rowid, std::any& data) {
         try {
             if (table == "slaves_telemetry") {

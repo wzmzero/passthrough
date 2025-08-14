@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <variant>
 #include <any>
-
+ 
  //数据类型
 enum Data_Type {
 	Data_YX = 1,	//遥信
@@ -24,6 +24,15 @@ enum class ValueType {
     Float         // 浮点数
 };
 
+
+enum ProtoType {
+    MODBUS_M = 0,   // Modbus主站
+    MODBUS_S,       // Modbus子站
+    IEC101_M,       // 101主站
+    IEC101_S,       // 101子站
+    IEC104_M,       // 104主站
+    IEC104_S        // 104子站
+};
 /* 四遥点结构体
     * 用于报文解析的中间数据结构，比如Modbus帧->四遥点,四遥点->Modbus帧。
 */
@@ -43,6 +52,27 @@ typedef std::vector<TelemPoint> VecTelemPoint; // 四遥点向量
     DevInfo包含从站地址(为规约转换器提供的公共地址)
 */
 
+// 端点配置结构体
+struct EndpointConfig {
+    int id = 0;  // 主键
+    std::string type;
+    uint16_t port = 0;
+    std::string ip;
+    std::string serial_port;
+    uint32_t baud_rate = 0;
+	int instance_id;
+    // 添加比较运算符
+    bool operator==(const EndpointConfig& other) const {
+        return type == other.type &&
+               port == other.port &&
+               ip == other.ip &&
+               serial_port == other.serial_port &&
+               baud_rate == other.baud_rate;
+    }
+    bool operator!=(const EndpointConfig& other) const {
+        return !(*this == other);
+    }
+};
 
 struct  DevInfo{
     int dataId;				            //全局唯一ID
@@ -134,6 +164,7 @@ typedef struct SModbusParam_tag {
 
 //驱动参数联合
 union DriverParam {
+    ProtoType type; // 添加类型标识字段
 	M101Param m101_param;   //主站101
 	M104Param m104_param;	//主站104
 	S104Param s104_param;	//子站104

@@ -7,37 +7,33 @@
 #include <stdexcept>
 #include <vector>
 #include <map>
+#include <array>
+#include <algorithm>
 #include "common.h"
- 
+
+enum CommInsType {
+	Ins_Acquire = 1,	//采集实例
+	Ins_Transmit		//转发实例
+};
+
 struct DriverParam_Mid {
     int id;                       // 主键
-    int proto_type;              // 协议类型
-    std::string json_params;     // JSON 存协议特有字段 "{transmit_mode=TCP,}" "{link_addr= }"
+    ProtoType proto_type;         // 协议类型
     std::string desc;
+    std::string param_name;     
+    std::any   param_value;
+    int instance_id;
 };
- 
+typedef std::vector<DriverParam_Mid> VecDriverParam_Mid; // 设备信息向量
 
-// 端点配置结构体
-struct EndpointConfig {
-    int id = 0;  // 主键
-    std::string type;
-    uint16_t port = 0;
-    std::string ip;
-    std::string serial_port;
-    uint32_t baud_rate = 0;
-    // 添加比较运算符
-    bool operator==(const EndpointConfig& other) const {
-        return type == other.type &&
-               port == other.port &&
-               ip == other.ip &&
-               serial_port == other.serial_port &&
-               baud_rate == other.baud_rate;
-    }
-    bool operator!=(const EndpointConfig& other) const {
-        return !(*this == other);
-    }
+struct InstanceParm {
+    int id;
+    std::string name;   // RTU/DAS
+    CommInsType type;    //采集/转发
+	DriverParam driverParam;	//驱动参数
+    EndpointConfig channelParam;	//通道参数
+    VecDevInfo vecDevInfo;		//设备信息
 };
-
 
 // 通道配置结构体
 struct ChannelConfig {
@@ -62,106 +58,148 @@ struct ChannelConfig {
 
 #include <sqlite_orm/sqlite_orm.h>
 using namespace sqlite_orm;
-// ========== Data_Type 转换函数 ==========
-inline std::string Data_TypeToString(Data_Type type) {
-    switch (type) {
-        case Data_Type::Data_YX: return "YX";
-        case Data_Type::Data_YC: return "YC";
-        case Data_Type::Data_YK: return "YK";
-        case Data_Type::Data_YT: return "YT";
-    }
-    throw std::domain_error("Invalid Data_Type");
-}
 
-inline Data_Type Data_TypeFromString(const std::string& str) {
-    if (str == "YX") return Data_Type::Data_YX;
-    if (str == "YC") return Data_Type::Data_YC;
-    if (str == "YK") return Data_Type::Data_YK;
-    if (str == "YT") return Data_Type::Data_YT;
-    throw std::runtime_error("Invalid Data_Type string: " + str);
-}
-
-// ========== ValueType 转换函数 ==========
-inline std::string ValueTypeToString(ValueType type) {
-    switch (type) {
-        case ValueType::Boolean: return "Boolean";
-        case ValueType::Integer: return "Integer";
-        case ValueType::Float:   return "Float";
-    }
-    throw std::domain_error("Invalid ValueType");
-}
-
-inline ValueType ValueTypeFromString(const std::string& str) {
-    if (str == "Boolean") return ValueType::Boolean;
-    if (str == "Integer") return ValueType::Integer;
-    if (str == "Float")   return ValueType::Float;
-    throw std::runtime_error("Invalid ValueType string: " + str);
-}
-
-
-
-// ========== 整合所有 sqlite_orm 特化到单个命名空间 ==========
+// ========== 前置声明 ==========
 namespace sqlite_orm {
-    // ========== 特化 for Data_Type ==========
-    template<>
-    struct type_printer<Data_Type> : public text_printer {};
-    
-    template<>
-    struct statement_binder<Data_Type> {
-        int bind(sqlite3_stmt* stmt, int index, const Data_Type& value) {
-            return statement_binder<std::string>().bind(stmt, index, Data_TypeToString(value));
-        }
-    };
-    
-    template<>
-    struct field_printer<Data_Type> {
-        std::string operator()(const Data_Type& value) const {
-            return Data_TypeToString(value);
-        }
-    };
-    
-    template<>
-    struct row_extractor<Data_Type> {
-        Data_Type extract(const char* columnText) const {
-            return Data_TypeFromString(columnText);
-        }
+    template <typename T>
+    struct enum_traits;  // 主模板声明
 
-        Data_Type extract(sqlite3_stmt* stmt, int columnIndex) const {
-            auto str = reinterpret_cast<const char*>(sqlite3_column_text(stmt, columnIndex));
-            return this->extract(str);
-        }
-    };
+    // ========== 通用枚举处理模板 ==========
+    template <typename T>
+    inline std::string enum_to_string(T value) {
+        static_assert(std::is_enum_v<T>, "T must be an enum type");
+        return enum_traits<T>::toString(value);
+    }
 
-    // ========== 特化 for ValueType ==========
-    template<>
-    struct type_printer<ValueType> : public text_printer {};
-    
-    template<>
-    struct statement_binder<ValueType> {
-        int bind(sqlite3_stmt* stmt, int index, const ValueType& value) {
-            return statement_binder<std::string>().bind(stmt, index, ValueTypeToString(value));
-        }
-    };
-    
-    template<>
-    struct field_printer<ValueType> {
-        std::string operator()(const ValueType& value) const {
-            return ValueTypeToString(value);
-        }
-    };
-    
-    template<>
-    struct row_extractor<ValueType> {
-        ValueType extract(const char* columnText) const {
-            return ValueTypeFromString(columnText);
-        }
+    template <typename T>
+    inline T enum_from_string(const std::string& str) {
+        static_assert(std::is_enum_v<T>, "T must be an enum type");
+        return enum_traits<T>::fromString(str);
+    }
 
-        ValueType extract(sqlite3_stmt* stmt, int columnIndex) const {
-            auto str = reinterpret_cast<const char*>(sqlite3_column_text(stmt, columnIndex));
-            return this->extract(str);
+    // ========== 通用枚举处理基类 ==========
+    template <typename T, typename Mapping>
+    struct enum_traits_base {
+        using value_type = T;
+        
+        static inline std::string toString(value_type value) {
+            constexpr auto& mappings = Mapping::value;
+            auto it = std::find_if(std::begin(mappings), std::end(mappings), 
+                [value](const auto& pair) { return pair.first == value; });
+            if (it != std::end(mappings)) return it->second;
+            throw std::domain_error("Invalid enum value");
+        }
+        
+        static inline value_type fromString(const std::string& str) {
+            constexpr auto& mappings = Mapping::value;
+            auto it = std::find_if(std::begin(mappings), std::end(mappings), 
+                [&str](const auto& pair) { return pair.second == str; });
+            if (it != std::end(mappings)) return it->first;
+            throw std::runtime_error("Invalid enum string: " + str);
         }
     };
 
+    // ========== sqlite_orm 枚举支持 ==========
+    template <typename T>
+    struct type_printer<T, std::enable_if_t<std::is_enum_v<T>>> : public text_printer {};
+
+    template <typename T>
+    struct statement_binder<T, std::enable_if_t<std::is_enum_v<T>>> {
+        int bind(sqlite3_stmt* stmt, int index, const T& value) {
+            return statement_binder<std::string>().bind(
+                stmt, index, enum_to_string(value)
+            );
+        }
+    };
+
+    template <typename T>
+    struct field_printer<T, std::enable_if_t<std::is_enum_v<T>>> {
+        std::string operator()(const T& value) const {
+            return enum_to_string(value);
+        }
+    };
+
+    template <typename T>
+    struct row_extractor<T, std::enable_if_t<std::is_enum_v<T>>> {
+        T extract(const char* columnText) const {
+            return enum_from_string<T>(columnText);
+        }
+
+        T extract(sqlite3_stmt* stmt, int columnIndex) const {
+            const char* text = reinterpret_cast<const char*>(
+                sqlite3_column_text(stmt, columnIndex)
+            );
+            return this->extract(text);
+        }
+    };
+} // namespace sqlite_orm
+
+// ========== 映射关系声明 ==========
+namespace enum_mappings {
+
+// Data_Type 映射
+struct Data_Type_Mapping {
+    static constexpr std::array<std::pair<Data_Type, const char*>, 4> value = {{
+        {Data_Type::Data_YX, "YX"},
+        {Data_Type::Data_YC, "YC"},
+        {Data_Type::Data_YK, "YK"},
+        {Data_Type::Data_YT, "YT"}
+    }};
+};
+
+// ValueType 映射
+struct ValueType_Mapping {
+    static constexpr std::array<std::pair<ValueType, const char*>, 3> value = {{
+        {ValueType::Boolean, "Boolean"},
+        {ValueType::Integer, "Integer"},
+        {ValueType::Float, "Float"}
+    }};
+};
+
+struct ProtoType_Mapping {
+    static constexpr std::array<std::pair<ProtoType, const char*>, 6> value = {{
+        {ProtoType::MODBUS_M, "MODBUS_M"},
+        {ProtoType::MODBUS_S, "MODBUS_S"},
+        {ProtoType::IEC101_M, "IEC101_M"},
+        {ProtoType::IEC101_S, "IEC101_S"},
+        {ProtoType::IEC104_M, "IEC104_M"},
+        {ProtoType::IEC104_S, "IEC104_S"},
+    }};
+};
+// CommInsType 映射
+struct CommInsType_Mapping {
+    static constexpr std::array<std::pair<CommInsType, const char*>, 2> value = {{
+        {CommInsType::Ins_Acquire, "采集实例"},
+        {CommInsType::Ins_Transmit, "转发实例"}
+    }};
+};
+} // namespace enum_mappings
+
+// ========== 特化实现 ==========
+namespace sqlite_orm {
+
+// Data_Type 特化
+template <>
+struct enum_traits<Data_Type> 
+    : enum_traits_base<Data_Type, enum_mappings::Data_Type_Mapping> {};
+
+// ValueType 特化
+template <>
+struct enum_traits<ValueType> 
+    : enum_traits_base<ValueType, enum_mappings::ValueType_Mapping> {};
+// ProtoType 特化
+template <>
+struct enum_traits<ProtoType> 
+    : enum_traits_base<ProtoType, enum_mappings::ProtoType_Mapping> {};
+// CommInsType 特化
+template <>
+struct enum_traits<CommInsType> 
+    : enum_traits_base<CommInsType, enum_mappings::CommInsType_Mapping> {};
+
+} // namespace sqlite_orm
+
+// ========== 整合所有 sqlite_orm 特化 ==========
+namespace sqlite_orm {
     // ========== 特化 for std::any ==========
     template<>
     struct row_extractor<std::any> {
@@ -266,4 +304,4 @@ namespace sqlite_orm {
             throw std::runtime_error("Unsupported type in std::any field_printer");
         }
     };
-} 
+} // namespace sqlite_orm

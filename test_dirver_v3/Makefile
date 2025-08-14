@@ -1,6 +1,6 @@
 # 编译器设置
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -pthread -g  #-O2
+CXXFLAGS := -std=c++17 -Wall -Wextra -pthread -O2 #-g  #
 LDFLAGS := -pthread -lsqlite3 -lyaml-cpp -lpaho-mqttpp3 -lpaho-mqtt3a  
 
 # 头文件路径 (指向inc目录)

@@ -1,0 +1,39 @@
+{
+    "configurations": [
+        {
+            "name": "Driver Project",
+            "includePath": [
+                "${workspaceFolder}/test_dirver_v3/inc",
+                "${workspaceFolder}/test_dirver_v3/3rdparty"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/test_dirver_v3/inc",
+                    "${workspaceFolder}/test_dirver_v3/3rdparty"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+        // {
+        //     "name": "ORM Project",
+        //     "includePath": [
+        //         "${workspaceFolder}/test_orm/include"
+        //     ],
+        //     "browse": {
+        //         "path": [
+        //             "${workspaceFolder}/test_orm/include"
+        //         ],
+        //         "limitSymbolsToIncludedHeaders": true
+        //     },
+        //     "compilerPath": "/usr/bin/gcc",
+        //     "cStandard": "c17",
+        //     "cppStandard": "gnu++17",
+        //     "intelliSenseMode": "linux-gcc-x64"
+        // }
+    ],
+    "version": 4
+}

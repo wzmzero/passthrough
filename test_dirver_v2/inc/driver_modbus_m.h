@@ -15,7 +15,8 @@
 #include <cstring>
 #include <chrono>
 
- 
+
+static std::string hexStr(const std::vector<uint8_t>& v);
 
 // ---------------- CRC16 (Modbus) ----------------
 static uint16_t crc16_modbus(const uint8_t* data, size_t len) {
@@ -70,10 +71,4 @@ private:
 	time_t reqTime_;				//召测时间
 	bool sendFlag_;				//命令发送标识
     MModbusParam param_;			//规约参数
-
-    // 添加请求上下文结构
-    std::queue<TelemPoint> request_queue_;  // 请求点队列
-    TelemPoint current_request_;            // 当前处理的请求
-    bool waiting_response_ = false;         // 等待响应标志
-    std::mutex queue_mutex_;                // 队列锁
 };

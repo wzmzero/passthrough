@@ -54,51 +54,33 @@ void DriverModbusM::workThread() {
     while (running_) {
         time_t current_time = getCurrentTimeMs();
         
-        // 阶段1: 检查是否达到召测时间
-        if (!waiting_response_ && (current_time - reqTime_) >= param_.interval) {
-            // 生成新的请求点
+        // 检查是否达到召测时间间隔
+        if (!sendFlag_ && (current_time - reqTime_) >= param_.interval) {
+            // 满足召测间隔，发送请求
             sendMessage();
-            reqTime_ = current_time;
+            sendTime_ = current_time; // 记录发送时间
+            sendFlag_ = true;         // 标记为已发送等待响应
         }
         
-        // 阶段2: 发送请求（如果没有等待响应）
-        if (!waiting_response_ && !request_queue_.empty()) {
-            {
-                std::lock_guard<std::mutex> lock(queue_mutex_);
-                current_request_ = request_queue_.front();
-                request_queue_.pop();
-            }
-            
-            // 生成并发送帧
-            std::vector<uint8_t> frame = MakeFrame(current_request_);
-            if (!frame.empty()) {
-                {
-                    std::lock_guard<std::mutex> lock(sendMutex_);
-                    sendqueue_.push(frame);
-                }
-                sendTime_ = current_time;
-                waiting_response_ = true;
-            }
+        // 检查是否超时
+        if (sendFlag_ && (current_time - sendTime_) >= param_.time_out) {
+            std::cerr << "Modbus request timeout!" << std::endl;
+            sendFlag_ = false; // 超时，重置发送标志
+            reqTime_ = current_time; // 重置请求时间为当前时间
         }
         
-        // 阶段3: 检查超时
-        if (waiting_response_ && (current_time - sendTime_) >= param_.time_out) {
-            std::cerr << "Timeout for point: " << current_request_.proAddr << std::endl;
-            waiting_response_ = false;
-        }
-        
-        // 阶段4: 处理接收
+        // 处理接收队列
         {
             std::unique_lock<std::mutex> lock(recvMutex_);
-            cv_.wait_for(lock, 100ms, [this] {
-                return !recvqueue_.empty() || !running_;
+            // 等待100ms或直到有数据
+            cv_.wait_for(lock, 100ms, [this] { 
+                return !recvqueue_.empty() || !running_; 
             });
-            if (!recvqueue_.empty() && waiting_response_) {
-                parseMessage();
-            }
+            parseMessage();
         }
     }
 }
+
 void DriverModbusM::parseMessage() {
     while (!recvqueue_.empty()) {
         auto frame = recvqueue_.front();
@@ -190,7 +172,7 @@ int DriverModbusM::parseFrame(const std::vector<uint8_t>& frame, VecTelemPoint& 
                     uint8_t byte_val = data_start[1 + byte_idx];
                     for (int bit_idx = 0; bit_idx < 8; ++bit_idx) {
                         TelemPoint point;
-                        point.proAddr = current_request_.proAddr + (byte_idx * 8) + bit_idx;
+                        point.proAddr = (byte_idx * 8) + bit_idx; // 位地址
                         point.data_type = Data_YX; // 开出状态属于遥信
                         point.value = (byte_val >> bit_idx) & 0x01;
                         v_parsetelem.push_back(point);
@@ -209,7 +191,7 @@ int DriverModbusM::parseFrame(const std::vector<uint8_t>& frame, VecTelemPoint& 
                     uint8_t byte_val = data_start[1 + byte_idx];
                     for (int bit_idx = 0; bit_idx < 8; ++bit_idx) {
                         TelemPoint point;
-                        point.proAddr = current_request_.proAddr + (byte_idx * 8) + bit_idx;
+                        point.proAddr = (byte_idx * 8) + bit_idx; // 位地址
                         point.data_type = Data_YX; // 开入状态属于遥信
                         point.value = (byte_val >> bit_idx) & 0x01;
                         v_parsetelem.push_back(point);
@@ -229,7 +211,7 @@ int DriverModbusM::parseFrame(const std::vector<uint8_t>& frame, VecTelemPoint& 
                 for (int i = 0; i < reg_count; ++i) {
                     uint16_t reg_val = (data_start[1 + 2*i] << 8) | data_start[2 + 2*i];
                     TelemPoint point;
-                    point.proAddr =  current_request_.proAddr + i;
+                    point.proAddr = i; // 寄存器索引
                     point.data_type = Data_YC; // 模入/模出状态属于遥测
                     point.value = reg_val;
                     v_parsetelem.push_back(point);
@@ -275,9 +257,6 @@ void DriverModbusM::sendMessage() {
         point.data_type = dev.data_type;    // 四遥类型
         point.value = dev.value;            // 当前值
         v_sendtelem_.push_back(point);
-        // 添加到请求队列
-        std::lock_guard<std::mutex> lock(queue_mutex_);
-        request_queue_.push(point);
     }
     
     // 为每个四遥点生成帧

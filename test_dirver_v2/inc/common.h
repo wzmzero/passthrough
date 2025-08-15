@@ -35,6 +35,15 @@ enum CommInsType {
 	Ins_Acquire = 1,	//采集实例
 	Ins_Transmit		//转发实例
 };
+struct InstanceParm {
+    int id;
+    std::string name;   // RTU/DAS
+    CommInsType type;    //采集/转发
+	DriverParam driverParam;	//驱动参数
+    EndpointConfig channelParam;	//通道参数
+    VecDevInfo vecDevInfo;		//设备信息
+};
+typedef std::vector<InstanceParm> VEC_INSTANCE;
 
 /* 四遥点结构体
     * 用于报文解析的中间数据结构，比如Modbus帧->四遥点,四遥点->Modbus帧。
@@ -42,9 +51,9 @@ enum CommInsType {
  struct TelemPoint{
     uint32_t proAddr;                    //规约地址\寄存器地址 (e.g., "0x4001")
     Data_Type data_type;                // 四遥类型 YX, YC, YK, YT
-    uint8_t subAddr;                        // 从站地址 (e.g., "1")
+    // uint8_t subAddr;                        // 从站地址 (e.g., "1")
     int value;                     // 存储实际值
-	int dataId;				            //全局唯一ID
+
 };
 typedef std::map<int, TelemPoint> MapTelemPoint; // 四遥点表 (ID -> TelemPoint)
 typedef std::vector<TelemPoint> VecTelemPoint; // 四遥点向量
@@ -204,12 +213,3 @@ enum FunctionCode {
 
  
 
-struct InstanceParm {
-    int id;
-    std::string name;   // RTU/DAS
-    CommInsType type;    //采集/转发
-	DriverParam driverParam;	//驱动参数
-    EndpointConfig channelParam;	//通道参数
-    VecDevInfo vecDevInfo;		//设备信息
-};
-typedef std::vector<InstanceParm> VEC_INSTANCE;
